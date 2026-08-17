@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/canvasflow.tsx","./src/components/detailpanel.tsx","./src/components/sidebar.tsx","./src/components/toolbar.tsx","./src/components/edges/customedge.tsx","./src/components/nodes/basenode.tsx","./src/hooks/usedragdrop.ts","./src/store/useflowstore.ts","./src/types/index.ts"],"version":"5.9.3"}
