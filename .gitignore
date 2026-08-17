@@ -23,4 +23,5 @@ lerna-debug.log*
 .pnp.loader.json
 .pnp.data.json
 pnpm-lock.yaml
+pnpm-workspace.yaml
 pnpm-works

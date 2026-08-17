@@ -12,8 +12,10 @@ export default function App() {
         <Toolbar />
         <div className="rf-main">
           <Sidebar />
-          <CanvasFlow />
-          <DetailPanel />
+          <div className="rf-canvas-area">
+            <CanvasFlow />
+            <DetailPanel />
+          </div>
         </div>
       </div>
     </ReactFlowProvider>

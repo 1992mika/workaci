@@ -1,10 +1,11 @@
-import { memo, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import {
   BaseEdge,
   EdgeLabelRenderer,
   getBezierPath,
   type EdgeProps,
 } from '@xyflow/react'
+import { useFlowStore } from '../../store/useFlowStore'
 
 function CustomEdgeComponent({
   id,
@@ -20,6 +21,7 @@ function CustomEdgeComponent({
   animated,
 }: EdgeProps) {
   const [hovered, setHovered] = useState(false)
+  const deleteEdge = useFlowStore((s) => s.deleteEdge)
 
   // 贝塞尔曲线：平滑弯曲，无直角
   const [edgePath, labelX, labelY] = getBezierPath({
@@ -32,6 +34,14 @@ function CustomEdgeComponent({
   })
 
   const isHighlighted = selected || hovered
+
+  const onDoubleClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      deleteEdge(id)
+    },
+    [deleteEdge, id]
+  )
 
   return (
     <>
@@ -53,6 +63,7 @@ function CustomEdgeComponent({
         strokeWidth={24}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onDoubleClick={onDoubleClick}
         style={{ cursor: 'pointer' }}
       />
       <EdgeLabelRenderer>
