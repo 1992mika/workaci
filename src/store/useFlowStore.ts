@@ -173,10 +173,17 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     }),
 }))
 
-/** 节点类型配置表 */
-export const NODE_TEMPLATES: { type: NodeType; label: string; icon: string; color: string; description: string }[] = [
-  { type: 'input', label: '输入节点', icon: '▶', color: '#3b82f6', description: '数据输入源' },
-  { type: 'process', label: '处理节点', icon: '⚙', color: '#8b5cf6', description: '数据处理/转换' },
-  { type: 'decision', label: '判断节点', icon: '◆', color: '#f59e0b', description: '条件分支判断' },
-  { type: 'output', label: '输出节点', icon: '◉', color: '#10b981', description: '结果输出' },
+/** 节点类型配置表：color 用于节点端口 / 边框；aurora 用于侧边栏卡片极光背景 */
+export const NODE_TEMPLATES: {
+  type: NodeType
+  label: string
+  icon: string
+  color: string
+  description: string
+  aurora: { a: string; b: string; c: string }
+}[] = [
+  { type: 'input', label: '输入节点', icon: '▶', color: '#3b82f6', description: '数据输入源', aurora: { a: '#27e8df', b: '#11a9c8', c: '#17346f' } },
+  { type: 'process', label: '处理节点', icon: '⚙', color: '#8b5cf6', description: '数据处理/转换', aurora: { a: '#a78bfa', b: '#7c3aed', c: '#4c1d95' } },
+  { type: 'decision', label: '判断节点', icon: '◆', color: '#f59e0b', description: '条件分支判断', aurora: { a: '#ff8b3d', b: '#ff4aa9', c: '#aa49ff' } },
+  { type: 'output', label: '输出节点', icon: '◉', color: '#10b981', description: '结果输出', aurora: { a: '#5ff0a8', b: '#1aa056', c: '#0a3d2a' } },
 ]

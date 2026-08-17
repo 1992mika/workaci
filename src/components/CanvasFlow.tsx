@@ -114,7 +114,7 @@ export default function CanvasFlow() {
           variant={BackgroundVariant.Dots}
           gap={20}
           size={1.5}
-          color="rgba(255,255,255,0.06)"
+          color="var(--minimap-dot, rgba(255,255,255,0.06))"
         />
         <Controls
           className="rf-controls"
@@ -128,10 +128,10 @@ export default function CanvasFlow() {
             const data = n.data as AppNodeData
             return NODE_COLORS[data?.nodeType] ?? '#64748b'
           }}
-          maskColor="rgba(0,0,0,0.5)"
+          maskColor="var(--minimap-mask, rgba(0,0,0,0.5))"
           style={{
-            background: 'rgba(15,23,42,0.9)',
-            border: '1px solid rgba(255,255,255,0.1)',
+            background: 'var(--panel)',
+            border: '1px solid var(--line)',
           }}
         />
       </ReactFlow>

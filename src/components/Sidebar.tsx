@@ -1,11 +1,21 @@
 import { useFlowStore, NODE_TEMPLATES } from '../store/useFlowStore'
 import { useDragDrop } from '../hooks/useDragDrop'
+import { useTheme, type AccentName } from '../hooks/useTheme'
 
-/** 侧边栏 —— 节点模板面板，拖拽到画布上创建节点 */
+const ACCENT_LABELS: Record<AccentName, string> = {
+  emerald: '翡翠',
+  ocean: '静海',
+  iris: '鸢尾',
+  amber: '琥珀',
+  sakura: '绯樱',
+}
+
+/** 侧边栏 —— 节点模板面板（极光卡片），拖拽到画布上创建节点；底部主题/强调色切换 */
 export default function Sidebar() {
   const { onDragStart } = useDragDrop()
   const nodeCount = useFlowStore((s) => s.nodes.length)
   const edgeCount = useFlowStore((s) => s.edges.length)
+  const { theme, accent, toggleTheme, setAccent, accents } = useTheme()
 
   return (
     <aside className="rf-sidebar">
@@ -19,7 +29,13 @@ export default function Sidebar() {
               className="rf-palette-item"
               draggable
               onDragStart={(e) => onDragStart(e, tpl.type)}
-              style={{ borderLeftColor: tpl.color }}
+              style={
+                {
+                  '--palette-a': tpl.aurora.a,
+                  '--palette-b': tpl.aurora.b,
+                  '--palette-c': tpl.aurora.c,
+                } as React.CSSProperties
+              }
             >
               <span className="rf-palette-icon" style={{ color: tpl.color }}>
                 {tpl.icon}
@@ -56,6 +72,39 @@ export default function Sidebar() {
           <li><b>Delete</b> 键删除选中项</li>
           <li><b>滚轮</b>缩放 · <b>拖拽空白</b>平移</li>
         </ul>
+      </div>
+
+      {/* 左下角：亮暗主题 + 强调色切换 */}
+      <div className="rf-theme-bar">
+        <div className="rf-theme-row">
+          <span className="rf-theme-row-label">主题 · {theme === 'dark' ? '暗色' : '亮色'}</span>
+          <button
+            type="button"
+            className="rf-theme-toggle"
+            onClick={toggleTheme}
+            role="switch"
+            aria-checked={theme === 'light'}
+            aria-label={`切换为${theme === 'dark' ? '亮色' : '暗色'}主题`}
+            title={`当前 ${theme === 'dark' ? '暗色' : '亮色'} · 点击切换`}
+          />
+        </div>
+        <div className="rf-theme-row">
+          <span className="rf-theme-row-label">强调色 · {ACCENT_LABELS[accent]}</span>
+          <div className="rf-accent-swatches" role="group" aria-label="选择界面强调色">
+            {accents.map((name) => (
+              <button
+                key={name}
+                type="button"
+                className={`rf-accent-swatch${name === accent ? ' active' : ''}`}
+                data-accent-value={name}
+                onClick={() => setAccent(name)}
+                aria-pressed={name === accent}
+                aria-label={`${ACCENT_LABELS[name]}强调色`}
+                title={ACCENT_LABELS[name]}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </aside>
   )
